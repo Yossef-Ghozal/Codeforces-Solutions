@@ -54,14 +54,5 @@ void dfs(ll u, ll d) {
  
 signed The_king() { fast(); file();
     ll n; cin >> n;
-    while ( n > 9 ) {
-        ll x = n;
-        ll sum = 0;
-        while ( x ) {
-            sum += x % 10;
-            x /= 10;
-        }
-        n = sum;
-    }
-    cout << n << endl;
+    cout << (n - 1) % 9 + 1 << endl;
 }
