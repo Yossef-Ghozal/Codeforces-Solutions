@@ -36,7 +36,6 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 #define endlt(i,n) (i == n ? '\n' : ' ')
 #define dkhan_mn_ghyr_kwfta main
  
- 
 void fast(){ ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr); }
 void file() {
 #ifndef ONLINE_JUDGE
