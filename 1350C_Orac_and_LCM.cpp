@@ -43,62 +43,34 @@ void file() {
 #endif
 }
  
-const int N = 200005;
-ll spf[N];
-vector<ll> primes[N];
-void sieve() {
-    for (int i = 2; i < N; i++) spf[i] = i;
-    for (int i = 2; i * i < N; i++) {
-        if (spf[i] == i) {
-            for (int j = i * i; j < N; j += i)
-                if (spf[j] == j) spf[j] = i;
-        }
+ll gcd(ll a, ll b) {
+    while (b != 0) {
+        ll r = a % b;
+        a = b;
+        b = r;
     }
+    return a;
 }
- 
-long long fastPower(long long a, long long b) {
-    long long res = 1;
-    while (b > 0) {
-        if (b % 2 == 1) res *= a;
-        a *= a;
-        b /= 2;
-    }
-    return res;
+ll lcm(ll a, ll b) {
+    return a*b*1ll / gcd(a, b);
 }
  
  
-signed The_king() { fast(); file(); sieve();
+signed The_king() { fast(); file();
     ll n; cin>>n;
     vector<ll> a(n);
     for ( int i = 0; i < n; i++ ) cin>>a[i];
  
-    for (int x : a) {
-        while (x > 1) {
-            int p = spf[x];
-            int cnt = 0;
-            while (x % p == 0) {
-                cnt++;
-                x /= p;
-            }
-            primes[p].push_back(cnt);
-        }
+    vector<ll> suf( n );
+    suf[n - 1] = a[n - 1];
+    for (int i = n - 2; i >= 0; i--) {
+        suf[i] = gcd(suf[i + 1], a[i]);
     }
  
- 
-    ll ans = 1 ;
-    for ( int i = 2; i < N ; i++ ) {
-        if (spf[i] != i ) continue;
- 
-        auto &v = primes[i];
-        ll m = v.size();
-        if ( m < n-1 ) continue;
- 
-        sort(v.begin(), v.end());
-        int exp = 0;
-        if (v.size() == n - 1) exp = v[0];
-        else if (v.size() == n) exp = v[1];
- 
-        ans *= fastPower(i,exp);
+    ll ans = 0;
+    for ( int i=0 ; i<n-1 ; i++ ) {
+        ll LCM = lcm( a[i] , suf[i+1] );
+        ans = gcd( ans, LCM );
     }
  
     pans;
